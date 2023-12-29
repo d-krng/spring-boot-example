@@ -1,0 +1,19 @@
+server:
+  port: 8080 #wenn der Port 80 or 443 wäre dann müsste man nicht localhost:8080/greet sondern nur localhost/greet
+  error:
+    include-message: always # API :Falls sensible Daten ausgegeben werden können bitte auf "never" setzen
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer #datasource
+    username: dk                                   # datasource
+    password: password                            # datasource
+  jpa:
+    hibernate:
+      ddl-auto: validate #none hibernate erstellt uns keine relation customer #validate Customer.java wird mit der DB tabelle bestätigt
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true # sql statements are turned on
+  main:
+    web-application-type: servlet
