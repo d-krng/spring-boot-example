@@ -41,11 +41,14 @@ public class CustomerJPADataAccessService implements CustomerDao{
     }
 
     @Override
-    public void updateCustomerById(Customer customer) {
+    public void updateCustomer(Customer customer) {
         customerRepository.saveAndFlush(customer);
     }
 
-
+    @Override
+    public boolean existsCustomerById(Integer id) {
+        return customerRepository.existsById(id);
+    }
 
 
 }

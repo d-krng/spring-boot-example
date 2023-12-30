@@ -13,7 +13,7 @@ public class CustomerService {
     private final CustomerDao customerDao;
 
 
-    public CustomerService(@Qualifier("jpa") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
@@ -54,11 +54,12 @@ public class CustomerService {
 
 
     public void updateCustomerById(Integer id, CustomerUpdate customerUpdate) {
-        Customer customerToUpdate = customerDao.selectCustomerById(id).get();
+
         boolean changes = false;
 
-        if (customerDao.selectCustomerById(id).isPresent()) {
+        if (customerDao.existsCustomerById(id)/*selectCustomerById(id).isPresent()*/) {
 
+            Customer customerToUpdate = customerDao.selectCustomerById(id).get();
             if (customerUpdate.name() != null && !(customerUpdate.name().equals(customerToUpdate.getName()))) {
                 customerToUpdate.setName(customerUpdate.name());
                 changes = true;
@@ -78,8 +79,11 @@ public class CustomerService {
                 throw new InvalidDataException("no data changes found");
             }
 
-            customerDao.updateCustomerById(customerToUpdate);
+            customerDao.updateCustomer(customerToUpdate);
+        }else {
+            throw new ResourceNotFoundException("Customer with id:[%s] not found".formatted(id));
         }
+
     }
 
 }

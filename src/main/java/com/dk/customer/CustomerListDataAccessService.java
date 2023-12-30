@@ -64,11 +64,14 @@ public class CustomerListDataAccessService implements CustomerDao{
     }
 
     @Override
-    public void updateCustomerById(Customer customer) {
+    public void updateCustomer(Customer customer) {
 
     }
 
-
+    @Override
+    public boolean existsCustomerById(Integer id) {
+        return false;
+    }
 
 
 }

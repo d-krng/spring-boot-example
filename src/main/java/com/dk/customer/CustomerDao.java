@@ -11,6 +11,7 @@ public interface CustomerDao {
 
     void deleteCustomerById(Integer id);
 
-    void updateCustomerById(Customer customer);
+    void updateCustomer(Customer customer);
+    boolean existsCustomerById(Integer id);
 
 }
