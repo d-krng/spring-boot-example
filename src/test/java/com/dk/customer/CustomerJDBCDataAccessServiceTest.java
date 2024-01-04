@@ -41,16 +41,23 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
         //When
        String email = customerTest.getEmail();
-       Integer id = underTest.selectAllCustomers().stream()
+       Integer id = underTest.selectAllCustomers()
+               .stream()
                .filter(c -> c.getEmail().equals(email))
                .findFirst()
                .map(c -> c.getId())
                .orElseThrow();
 
-       Optional<Customer> ex = underTest.selectCustomerById(id);
+       Optional<Customer> actualCustomer = underTest.selectCustomerById(id);
+
 
 
         //Then
+        Assertions.assertThat(actualCustomer).isPresent().hasValueSatisfying(c -> {
+
+            Assertions.assertThat(c.getId()).isEqualTo(id);
+            Assertions.assertThat(c.getName()).isEqualTo(customerTest.getName());
+        });
     }
 
     @Test
