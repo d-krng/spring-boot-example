@@ -70,7 +70,7 @@ public class CustomerService {
             }
             if (customerUpdate.email() != null && !(customerUpdate.email().equals(customerToUpdate.getEmail()))) {
                 if (customerDao.existsCustomerWithEmail(customerUpdate.email())) {
-                    throw new DublicateResourceException("Email already used");
+                    throw new DublicateResourceException("Email is already used");
                 }
                 customerToUpdate.setEmail(customerUpdate.email());
                 changes = true;
