@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -44,8 +45,8 @@ public class CustomerService {
 
     public void deleteCustomer(Integer id) {
         //Look for customer with id
-        if (customerDao.selectCustomerById(id).isPresent()) {
-            customerDao.deleteCustomerById(id);
+        if (customerDao.existsCustomerById(id)) { //Falls was bricht habe hier was verändert
+             customerDao.deleteCustomerById(id);
         } else {
             throw new ResourceNotFoundException("Customer with id: %s not found".formatted(id));
         }
