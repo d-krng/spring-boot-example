@@ -13,6 +13,20 @@ services:
     networks:
       - db
     restart: unless-stopped
+  dkrng-api:
+    container_name: dkrng-api
+    image: dkrng/dkrng-api
+    #environment:
+     #  SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/customer" can use this or command see below
+    ports:
+      - "8088:8080"
+    networks:
+      - db
+    depends_on:
+      - db
+    restart: unless-stopped
+    command:
+      - --spring.datasource.url=jdbc:postgresql://db:5432/customer
 
 networks:
   db:
