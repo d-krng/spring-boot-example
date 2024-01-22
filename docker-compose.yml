@@ -26,7 +26,7 @@ services:
       - db
     restart: unless-stopped
     #command:
-     # - --spring.datasource.url=jdbc:postgresql://db:5432/customer se above Spring data source
+      #- --spring.datasource.url=jdbc:postgresql://db:5432/customer se above Spring data source
 
 networks:
   db:
