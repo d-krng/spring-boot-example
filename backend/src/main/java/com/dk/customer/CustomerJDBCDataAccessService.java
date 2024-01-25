@@ -77,7 +77,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         var sql = """
                 select *
                 from customer
-                where email = ?
+                where name = ?
                 """;
 
         return jdbcTemplate.query(sql,customerRowMapper,email).stream().findFirst().isPresent();
