@@ -29,7 +29,7 @@ class CustomerServiceTest extends AbstractTestcontainers {
 
     @BeforeEach
     void setUp() {
-       // this not needed because of Annotation over class autoCloseable = MockitoAnnotations.openMocks(this);
+       // this is not needed because of Annotation over class autoCloseable = MockitoAnnotations.openMocks(this);
         underTest = new CustomerService(customerDao);
     }
 
