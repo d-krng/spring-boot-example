@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4 # checkout branch
-      - uses: actions/setup-java@4 # setup java
+      - uses: actions/setup-java@v4 # setup java
         with:
           distribution: 'temurin'
           java-version: '17'
