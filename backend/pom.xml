@@ -12,15 +12,14 @@
 	<groupId>com.dk</groupId>
 	<artifactId>dkrng-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<organization>
-		<name>dkrng</name>
-		<url>https://dkrng.com</url>
-	</organization>
+
 	<name>spring-boot-example</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 		<docker.username>dkrng</docker.username>
+		<docker.image.name>dkrng-api</docker.image.name>
+		<docker.image.tag/>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -168,8 +167,8 @@
 						</platforms>
 					</from>
 					<to>
-						<image>docker.io/${docker.username}/${project.artifactId}:${project.version}</image>
-						<!--<image>docker.io/dkrng/dkrng-api:0.0.1-SNAPSHOT}</image>-->
+						<image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
+						<!--<image>docker.io/dkrng/dkrng-api:**27.01.2024.20.12.55**}</image>-->
 						<tags>
 							<tag>latest</tag>
 						</tags>
