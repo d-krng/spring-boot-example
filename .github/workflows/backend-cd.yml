@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Send GitHub Action trigger data to Slack CD-workflow
-        id: slack
+        id: slack1
         uses: slackapi/slack-github-action@v1.25.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -57,7 +57,7 @@ jobs:
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Send GitHub Action trigger data to Slack CD-workflow (Build and Push to DockerHub)
-        id: slack
+        id: slack2
         uses: slackapi/slack-github-action@v1.25.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -70,7 +70,7 @@ jobs:
       - name: Build Package Push with maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - name: Send GitHub Action trigger data to Slack CD-workflow (Pushed to Docker Hub)
-        id: slack
+        id: slack3
         uses: slackapi/slack-github-action@v1.25.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -88,7 +88,7 @@ jobs:
           echo "Dockerrun.aws.json after updating tag"
           cat Dockerrun.aws.json
       - name: Send GitHub Action trigger data to Slack CD-workflow (Starting Deployment)
-        id: slack
+        id: slack4
         uses: slackapi/slack-github-action@v1.25.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
@@ -110,7 +110,7 @@ jobs:
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
       - name: Send GitHub Action trigger data to Slack CD-workflow (Deployment done)
-        id: slack
+        id: slack5
         uses: slackapi/slack-github-action@v1.25.0
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
