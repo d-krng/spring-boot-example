@@ -31,11 +31,17 @@ jobs:
         working-directory: ./backend
 
     steps:
-      - name: Starting Deployment Workflow
-        run: > 
-        curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Starting CD-Workflow"}' 
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send GitHub Action trigger data to Slack CD-workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "CD-Workflow has started"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/checkout@v3 # checkout branch
       - uses: actions/setup-java@v4 # setup java
         with:
@@ -50,18 +56,30 @@ jobs:
       - name: Set build-number
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
-      - name: Build Package and Push to Docker
-        run: >
-        curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Build Package and Push to Docker starting !"}'
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send GitHub Action trigger data to Slack CD-workflow (Build and Push to DockerHub)
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "Build and Push to Docker has started"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
-      - name: Pushed to DockerHub
-        run: >
-        curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Passed Step Push to DockerHub!"}'
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send GitHub Action trigger data to Slack CD-workflow (Pushed to Docker Hub)
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "Build and Push to Docker done"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
         run: |
           echo "Dockerrun.aws.json before updating tag"
@@ -69,11 +87,17 @@ jobs:
           sed -i -E 's_(dkrng/dkrng-api:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' Dockerrun.aws.json
           echo "Dockerrun.aws.json after updating tag"
           cat Dockerrun.aws.json
-      - name: Starting deployment
-        run: >
-        curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Starting deployment"}'
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send GitHub Action trigger data to Slack CD-workflow (Starting Deployment)
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "Deployment started"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -85,6 +109,17 @@ jobs:
           version_description: ${{ github.SHA }}
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
+      - name: Send GitHub Action trigger data to Slack CD-workflow (Deployment done)
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "Deployment done :wave: "
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and Push Dockerrun.aws.json
         run: |
           git config user.name github-actions
@@ -92,8 +127,3 @@ jobs:
           git add Dockerrun.aws.json
           git commit -m "Update Dockerrun.aws.json docker image with new tag : ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push
-      - name: Passed Deployment
-        run: >
-        curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Passed Step Deployment!"}'
-          ${{ secrets.SLACK_WEBHOOK_URL }}
