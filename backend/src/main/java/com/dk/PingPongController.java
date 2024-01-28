@@ -10,6 +10,6 @@ public class PingPongController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/ping")
     public PingPong getPingPong() {
-    return new PingPong("PongPingPongPing");
+    return new PingPong("PongPingPongPingPong");
     }
 }
