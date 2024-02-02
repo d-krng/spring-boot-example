@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "dkrng-api",
-      "image": "dkrng/dkrng-api:02.02.2024.12.37.10",
+      "image": "dkrng/dkrng-api:02.02.2024.12.56.26",
       "essential": true,
       "memory": 512,
       "portMappings": [
