@@ -43,6 +43,16 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/checkout@v3 # checkout branch
+      - name: Slack commit message and sha
+        id: slack0
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": ":github: https://github.com/d-krng/spring-boot-example/commit/${{ github.sha }} - {{ github.event.head_commit.message }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/setup-java@v4 # setup java
         with:
           distribution: 'temurin'
