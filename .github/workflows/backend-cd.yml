@@ -49,7 +49,7 @@ jobs:
         with:
           payload: |
             {
-              "text": ":github: https://github.com/d-krng/spring-boot-example/commit/${{ github.sha }} - {{ github.event.head_commit.message }}"
+              "text": ": githubloading: https://github.com/d-krng/spring-boot-example/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
