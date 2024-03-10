@@ -17,3 +17,8 @@ spring:
     show-sql: true # sql statements are turned on
   main:
     web-application-type: servlet
+
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
