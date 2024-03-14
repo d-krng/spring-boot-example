@@ -4,7 +4,7 @@ server:
     include-message: always # API :Falls sensible Daten ausgegeben werden können bitte auf "never" setzen
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer #datasource
+    url: jdbc:postgresql://postgres:5432/customer #datasource
     username: dk                                   # datasource
     password: password                            # datasource
   jpa:
