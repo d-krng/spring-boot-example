@@ -12,6 +12,6 @@ public class PingPongController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/ping")
     public PingPong getPingPong() {
-    return new PingPong("Pongsssss: %s" .formatted(++COUNTER));
+    return new PingPong("Pongssssss: %s" .formatted(++COUNTER));
     }
 }

@@ -17,6 +17,8 @@ spring:
     show-sql: true # sql statements are turned on
   main:
     web-application-type: servlet
+  flyway:
+    validate-on-migrate: false
 
 
 cors:
