@@ -46,7 +46,8 @@ function App() {
             <Wrap spacing={'100px'} justify={'space-around'}>
             {customers.map((customer, index) => (
                     <WrapItem key={index}>
-                        <CardWithImage{...customer}></CardWithImage>
+                        <CardWithImage{...customer}
+                        imagenumber={index}></CardWithImage>
                     </WrapItem>
 
             ))}

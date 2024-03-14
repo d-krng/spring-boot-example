@@ -12,12 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest extends AbstractTestcontainers {
@@ -84,7 +81,7 @@ class CustomerServiceTest extends AbstractTestcontainers {
        Customer customerTest = createTestCustomer();
        Mockito.when(customerDao.existsCustomerWithEmail(customerTest.getEmail())).thenReturn(false);
         //When
-        underTest.addCustomer(new CustomerRegistrationRequest(customerTest.getName(),customerTest.getEmail(),customerTest.getAge()));
+        underTest.addCustomer(new CustomerRegistrationRequest(customerTest.getName(),customerTest.getEmail(),customerTest.getAge(), customerTest.getGender()));
         //Then
         Mockito.verify(customerDao).insertCustomer(customerTest);
 
@@ -108,7 +105,7 @@ class CustomerServiceTest extends AbstractTestcontainers {
         //When
         //Then
 
-        Assertions.assertThatThrownBy(()-> underTest.addCustomer(new CustomerRegistrationRequest(customerTest.getName(),customerTest.getEmail(),customerTest.getAge())))
+        Assertions.assertThatThrownBy(()-> underTest.addCustomer(new CustomerRegistrationRequest(customerTest.getName(),customerTest.getEmail(),customerTest.getAge(), customerTest.getGender())))
                 .isInstanceOf(DublicateResourceException.class)
                 .hasMessage("This email: %s already used".formatted(customerTest.getEmail()));
 
@@ -160,8 +157,8 @@ class CustomerServiceTest extends AbstractTestcontainers {
                 new CustomerUpdate(
                         "Update",
                         customerTest.getEmail(),
-                        customerTest.getAge()
-                )
+                        customerTest.getAge(),
+                        customerTest.getGender())
         );
 
         //Then
@@ -183,7 +180,8 @@ class CustomerServiceTest extends AbstractTestcontainers {
                 new CustomerUpdate(
                         customerTest.getName(),
                         customerTest.getEmail(),
-                        customerTest.getAge()
+                        customerTest.getAge(),
+                        customerTest.getGender()
                 )
         )).isInstanceOf(InvalidDataException.class).hasMessage("no data changes found");
     }
@@ -201,8 +199,8 @@ class CustomerServiceTest extends AbstractTestcontainers {
                 new CustomerUpdate(
                         customerTest.getName(),
                         customerTest.getEmail(),
-                        customerTest.getAge()
-                )
+                        customerTest.getAge(),
+                        customerTest.getGender())
         )).isInstanceOf(ResourceNotFoundException.class).hasMessage("Customer with id:[%s] not found".formatted(id));
     }
 }

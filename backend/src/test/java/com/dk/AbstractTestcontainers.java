@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
-import java.rmi.server.UID;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -62,6 +61,13 @@ public abstract class AbstractTestcontainers {
         return new JdbcTemplate(getDataSource());
     }
 
+    protected static String randomGender() {
+        double num = (int) (Math.random() * 10);
+        if(num % 2 == 0) {
+            return "MALE";
+        }
+        return "FEMALE";
+    }
     protected static Customer createTestCustomer() {
         Faker faker = new Faker(new Locale("en-US"));
         String firstname = faker.name().firstName();
@@ -70,7 +76,8 @@ public abstract class AbstractTestcontainers {
         return new Customer(
                 firstname+" "+lastname,
                 firstname+"."+lastname+"-"+UUID.randomUUID()+"@"+faker.internet().domainName().toLowerCase(),
-                faker.number().numberBetween(16,99)
+                faker.number().numberBetween(16,99),
+                randomGender()
         );
     }
 

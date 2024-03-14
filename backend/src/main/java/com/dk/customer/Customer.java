@@ -41,13 +41,15 @@ public class Customer {
     private String email;
     @Column(nullable = false)
     private Integer age;
+    @Column(nullable = false, columnDefinition = "gender")
+    private String gender;
 
-    public Customer(String name, String email, Integer age) {
+    public Customer(String name, String email, Integer age, String gender) {
         this.age = age;
         this.email = email;
         this.name = name;
+        this.gender = gender;
 
     }
-
 
 }

@@ -38,11 +38,13 @@ class CustomerRowMapperTest extends AbstractTestcontainers {
         Mockito.when(resultSet.getString("name")).thenReturn(customerTest.getName());
         Mockito.when(resultSet.getString("email")).thenReturn(customerTest.getEmail());
         Mockito.when(resultSet.getInt("age")).thenReturn(customerTest.getAge());
+        Mockito.when(resultSet.getString("gender")).thenReturn(customerTest.getGender());
         //When
         Customer actual = underTest.mapRow(resultSet,1);
 
         //Then
         Assertions.assertThat(actual.getId()).isEqualTo(1);
         Assertions.assertThat(actual.getEmail()).isEqualTo(customerTest.getEmail());
+        Assertions.assertThat(actual.getGender()).isEqualTo(customerTest.getGender());
     }
 }

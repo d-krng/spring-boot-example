@@ -1,5 +1,6 @@
 package com.dk.journey;
 
+import com.dk.Main;
 import com.dk.customer.Customer;
 import com.dk.customer.CustomerRegistrationRequest;
 import com.dk.customer.CustomerUpdate;
@@ -15,7 +16,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,7 +39,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
                 name,
                 email,
-                age
+                age,
+                Main.randomGender()
         );
 
         //send a post request
@@ -102,7 +103,8 @@ public class CustomerIntegrationTest {
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
                 "name",
                         email,
-                18
+                18,
+                Main.randomGender()
         );
 
         //send a post request
@@ -166,11 +168,13 @@ public class CustomerIntegrationTest {
         String name = fakerName.firstName();
         String email = UUID.randomUUID() +"@ayeth.com";
         int age = faker.number().numberBetween(10,100);
+        String gender = Main.randomGender();
 
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
                 name,
                 email,
-                age
+                age,
+                Main.randomGender()
         );
 
         //send a post request
@@ -202,8 +206,8 @@ public class CustomerIntegrationTest {
         CustomerUpdate customerUpdate = new CustomerUpdate(
                 "DK",
                 email,
-                age
-        );
+                age,
+                gender);
 
         webTestClient.put()
                 .uri(uriBuilder -> uriBuilder.path(CUSTOMER_URI+"/{id}").build(id))

@@ -13,8 +13,10 @@ import {
     Tag,
     useColorModeValue,
 } from '@chakra-ui/react'
-
 export default function CardWithImage(props) {
+
+    const gender = props.gender === "MALE" ? "men" : "women"
+
     return (
         <Center py={3}>
             <Box
@@ -36,7 +38,7 @@ export default function CardWithImage(props) {
                     <Avatar
                         size={'xl'}
                         src={
-                            'https://media.gq-magazin.de/photos/5f2a7bbb3f7137e6d31844b6/16:9/w_2992,h_1683,c_limit/entertainment-stars-will-smith-aufm.jpg'
+                            `https://randomuser.me/api/portraits/med/${gender}/${props.imagenumber}.jpg`
                         }
                         css={{
                             border: '2px solid white',

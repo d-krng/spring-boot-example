@@ -31,14 +31,24 @@ public class CustomerService {
     public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         //check if email exist
         //add
+        //Check if gender was inserted correct
         if (customerDao.existsCustomerWithEmail(customerRegistrationRequest.email())) {
             throw new DublicateResourceException("This email: %s already used".formatted(customerRegistrationRequest.email()));
-        } else {
-            customerDao.insertCustomer(
-                    new Customer(
-                            customerRegistrationRequest.name(),
-                            customerRegistrationRequest.email(),
-                            customerRegistrationRequest.age()));
+        } else if (customerRegistrationRequest.gender()== null) {
+            throw new InvalidDataException("Please choose MALE or FEMALE");
+        }
+        else {
+
+                if(customerRegistrationRequest.gender().equalsIgnoreCase("FEMALE") || customerRegistrationRequest.gender().equalsIgnoreCase("MALE") ) {
+                    customerDao.insertCustomer(
+                            new Customer(
+                                    customerRegistrationRequest.name(),
+                                    customerRegistrationRequest.email(),
+                                    customerRegistrationRequest.age(),
+                                    customerRegistrationRequest.gender().toUpperCase()));
+                }else {
+                    throw new InvalidDataException("Please choose between MALE and FEMALE");
+                }
         }
 
     }
