@@ -12,6 +12,10 @@ create table customer
     gender TEXT not null
 );
 
+create table tableTracking
+(
+    name TEXT
+);
 
 /*create table customer
 (
